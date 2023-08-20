@@ -1,0 +1,68 @@
+
+keep if workpref_2!=76
+keep if workpref_2!=77
+
+gen yredu=0
+replace yredu=6 if edu_2==1
+replace yredu=6 if edu_2==2
+replace yredu=6 if edu_2==3
+replace yredu=9 if edu_2==4
+replace yredu=12 if edu_2==5
+replace yredu=12 if edu_2==6
+replace yredu=14 if edu_2==7
+replace yredu=16 if edu_2==8
+replace yredu=18 if edu_2==9
+replace yredu=21 if edu_2==10
+
+gen exp=age_2-yredu-6
+keep if exp>=0
+gen expsq=exp^2
+
+gen gender=(sex==1)
+gen married=(marital_2==2)
+gen agesq=age_2^2
+gen deltainc=income_2-income_1
+gen location=0
+replace location=1 if workpref_2==2
+replace location=1 if workpref_2==17
+replace location=1 if workpref_2==65
+replace location=1 if workpref_2==68
+replace location=1 if workpref_2==18
+replace location=1 if workpref_2==63
+replace location=1 if workpref_2==4
+replace location=2 if workpref_2==5
+replace location=2 if workpref_2==7
+replace location=2 if workpref_2==8
+replace location=2 if workpref_2==9
+replace location=2 if workpref_2==66
+replace location=3 if workpref_2==20
+replace location=3 if workpref_2==64
+replace location=3 if workpref_2==67
+replace location=3 if workpref_2==10
+replace location=3 if workpref_2==13
+replace location=3 if workpref_2==16
+replace location=4 if workpref_2==14
+replace location=4 if workpref_2==15
+replace location=4 if workpref_2==75
+gen w_loc=(location==2)
+gen s_loc=(location==3)
+gen e_loc=(location==4)
+
+gen D1=(S1*T)
+gen D2=(S2*T)
+gen D3=(S3*T)
+gen industry=0
+replace industry=1 if indu_2<=3
+
+replace industry=2 if indu_2>=4 & indu_2<=43
+
+replace industry=3 if indu_2>43
+
+gen industry_1=(industry==1)
+
+gen industry_2=(industry==2)
+
+reg deltainc S1 S2 S3 D1 D2 D3 yredu exp expsq gender married w_loc s_loc e_loc industry_1 industry_2,r
+
+reg deltainc S1 S2 S3 D1 D2 D3 yredu age_2 agesq gender married w_loc s_loc e_loc industry_1 industry_2,r
+

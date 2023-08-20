@@ -1,0 +1,15 @@
+sum S1
+sum S2
+sum S3
+sum S4
+sum income_1
+sum income_2
+sum deltainc
+sum gender
+sum age_2
+sum exp
+sum yredu
+sum married
+sum havingchild_2
+
+tab year_2, sum(deltainc)

@@ -1,0 +1,32 @@
+if income_1='.' then delete;
+		if income_2='.' then delete;		
+		if sex_1='.' then delete;
+		if sex_2='.' then delete;
+		if age_1='.' then delete;
+		if age_2='.' then delete;
+        if edu_1='.' then delete;
+		if edu_2='.' then delete;
+        if b2_a_1='2' or b2_c_1='1' then group_1=1;
+		if b2_a_1='1' and b2_c_1='2' then group_1=2;
+		if b2_a_2='2' or b2_c_2='1' then group_2=1;
+		if b2_a_2='1' and b2_c_2='2' then group_2=2;
+		if group_1='1' and group_2='1' then S=1;
+		if group_1='1' and group_2='2' then S=2;
+		if group_1='2' and group_2='1' then S=3;
+		if group_1='2' and group_2='2' then S=4;
+		if year_1>='2018' or year_2>='2019' then T=1;
+		else T=0;
+        if group_1='1' and group_2='1' then S1=1;
+		else S1=0;
+		if group_1='1' and group_2='2' then S2=1;
+		else S2=0;
+		if group_1='2' and group_2='1' then S3=1;
+		else S3=0;
+        if group_1='2' and group_2='2' then S4=1;
+		else S4=0;
+		
+
+if indu_2='.' then delete;
+		if workpref_2='.' then delete;
+if income_1='1'or income_1='999999' then delete;
+        if income_2='1'or income_2='999999' then delete;

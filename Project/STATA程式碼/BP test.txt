@@ -1,0 +1,18 @@
+*heteroskedasticity test
+
+predict uhat, residual
+gen uhatsq = uhat^2
+predict yhat, xb
+gen yhatsq = yhat^2
+rvfplot, yline(0)
+
+
+reg uhatsq S1 S2 S3 D1 D2 D3 yredu exp expsq gender married w_loc s_loc e_loc industry_1 industry_2
+
+gen k1=16
+display "F-stat: " (e(r2)/k1)/((1-e(r2))/(e(N)-k1-1))
+display "p-value: " Ftail(k1,e(N)-e(df_m)-1,(e(r2)/k1)/((1-e(r2))/(e(N)-k1-1)))
+
+display "LM-stat: " e(N)*e(r2)
+display "p-value: " chi2tail(k1, e(N)*e(r2))
+

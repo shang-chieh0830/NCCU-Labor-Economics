@@ -1,0 +1,63 @@
+if group_1='1' then atyp_1=1;
+		if group_1='2' then atyp_1=0;
+		if group_2='1' then atyp_2=1;
+		if group_2='2' then atyp_2=0;
+if havingchild_2='.' then havingchild_2=0;
+if havingchild_2='.' then delete;
+
+
+global ylist atyp_2
+global xlist T age_2 gender yredu married havingchild_2 w_loc s_loc e_loc industry_1 industry_2 
+
+describe $ylist $xlist 
+summarize $ylist $xlist
+
+tabulate $ylist 
+
+* Regression 
+reg $ylist $xlist
+
+* Probit model
+probit $ylist $xlist
+
+* Logit model
+logit $ylist $xlist
+
+
+* Marginal effects (at the mean and average marginal effect)
+quietly reg $ylist $xlist
+margins, dydx(*) atmeans
+margins, dydx(*)
+
+quietly logit $ylist $xlist  
+margins, dydx(*) atmeans
+margins, dydx(*)
+
+quietly probit $ylist $xlist 
+margins, dydx(*) atmeans
+margins, dydx(*)
+
+
+*Logistic model gives odds ratio   
+logistic $ylist $xlist 
+
+
+* Predicted probabilities
+quietly logit $ylist $xlist
+predict plogit, pr
+
+quietly probit $ylist $xlist 
+predict pprobit, pr
+
+quietly regress $ylist $xlist
+predict pols, xb
+
+summarize $ylist plogit pprobit pols
+
+
+* Percent correctly predicted values
+quietly logit $ylist $xlist
+estat classification
+
+quietly probit $ylist $xlist
+estat classification

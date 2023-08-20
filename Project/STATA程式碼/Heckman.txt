@@ -1,0 +1,33 @@
+gen typ_2=(atyp_2==0)
+gen linc_2=log(income_2)
+global ylist linc_2
+global xlist T yredu exp expsq gender married w_loc s_loc e_loc industry_1 industry_2
+global xlist1 T age_2 gender yredu married havingchild_2 w_loc s_loc e_loc industry_1 industry_2 
+
+
+* Dummy variable 0 or 1 for y
+generate dy = atyp_2 >0 
+
+* Probit
+probit atyp_2 $xlist1
+
+* Heckman model
+heckman $ylist $xlist, select(dy = $xlist1) twostep
+margins, dydx(*) atmeans predict(e(0,.))
+
+
+
+global ylist linc_2
+global xlist T yredu exp expsq gender married w_loc s_loc e_loc industry_1 industry_2
+global xlist1 T age_2 gender yredu married havingchild_2 w_loc s_loc e_loc industry_1 industry_2 
+
+
+* Dummy variable 0 or 1 for y
+generate dy = typ_2 >0 
+
+* Probit
+probit typ_2 $xlist1
+
+* Heckman model
+heckman $ylist $xlist, select(dy = $xlist1) twostep
+margins, dydx(*) atmeans predict(e(0,.))

@@ -1,0 +1,13 @@
+gen typ_2=(atyp_2==0)
+gen linc_2=log(income_2)
+gen tem=(b2_c_2==1)
+global ylist linc_2
+global y1list part
+global y2list tem
+global xlist T yredu exp expsq gender married w_loc s_loc e_loc industry_1 industry_2
+global xlist1 T age_2 gender yredu married havingchild_2 w_loc s_loc e_loc industry_1 industry_2 
+
+
+biprobit $y1list $y2list $xlist
+
+heckman $ylist $xlist, select( $y1list, $y2list = $xlist1) twostep
